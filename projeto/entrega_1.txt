@@ -1,0 +1,31 @@
+Entrega 1 - Formulário de cadastro com TextView, EditText, Button, Toast, RadioGroup, RadioButton, CheckBox e Spinner
+Crie o projeto de um aplicativo com Nome relacionado ao tema escolhido e aprovado pelo professor.
+
+Neste projeto crie uma Activity que implemente um formulário de cadastro de uma das entidades previstas com as seguintes características:
+
+Uso de elementos Textview; 
+Uso de pelo menos 4 elementos EditText;
+Uso de 2 elementos Button;
+Uso de elementos RadioButton (pelo menos 3) com pelo menos um RadioGroup; 
+Uso de elementos CheckBox (pelo menos 1);
+Uso de elementos Spinner (pelo menos 1);
+Um dos Buttons deve ter o rótulo "Limpar" e ao ser clicado limpará os valores dos elementos EditText e desmarcará os RadioButtons e CheckBox, e depois será mostrado um Toast indicando a ação realizada;
+Um dos Buttons deve ter o rótulo "Salvar" e ao ser clicado recuperará os valores dos elementos EditText, CheckBox e Spinner, e o RadioButton selecionado. Caso algum EditText esteja vazio ou nenhum RadioButton selecionado, deverá ser mostrado uma mensagem de erro em um Toast e o foco de edição voltará para o campo vazio (caso seja possível).
+Caso o formulário de cadastro fique maior do que a tela do dispositivo será necessário colocar barra de rolagem, para tal, utilize a classe ScrollView ou HorizontalScrollView.
+
+Deve-se utilizar:
+
+O Android Studio 3.5.3 ou superior (apenas versões estáveis);
+Versão do Gradle específica da versão do Android Studio utilizada;
+Compile SDK Version para o API Level 29 (Android Q).
+Entregue o projeto do programa compactado em (.zip). Para tal, execute a opção de menu do Android Studio "File -> Export do Zip File...".
+
+Depois renomeie o arquivo compactado para ficar com o seguinte formato: "Nome Completo - Entrega 1.zip", e então submeta-o no moodle.
+
+Caso o arquivo fique com mais de 100 MB não é possível enviar ao moodle, neste caso, entre em contato com o professor para que a entrega seja feita via compartilhamento de arquivos em nuvem.
+
+Nos dias de entrega do Projeto Final, caso seja necessário, o professor poderá conversar com cada aluno para que o mesmo apresente o aplicativo criado, explique o código, e tire dúvidas sobre o desenvolvimento de cada funcionalidade.
+
+Caso o aluno não saiba apresentar o projeto, o mesma poderá ser recusado e ter a nota zerada.
+
+Caso um ou mais projetos sejam totalmente ou parcialmente plagiados, estes terão a nota zerada.

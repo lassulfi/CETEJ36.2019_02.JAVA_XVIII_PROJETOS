@@ -1,0 +1,29 @@
+Descreva o Tema do Aplicativo do Projeto da Disciplina, explique no que este software auxiliará o usuário, cite quais as principais funcionalidades que você já imagina para ele, e por fim quais entidades serão persistidas.
+
+O tema do meu projeto é o desenvolvimento de um app de Trilha de Aprendizado do Desenvolvedor.
+
+Esse App permite ao usuário ver as trilhas para se tornar um desenvolvedor. Dentro do app o usuário poderá escolher qual trilha de aprendizado seguir, por exemplo front-end, back-end, mobile e dev-ops. Ao escolher uma trilha o desenvolvedor pode cadastrar, editar, visualizar e excluir as tecnologias utilizadas em cada uma das trilhas. Também dentro dessas tecnologias o desenvolvedor pode também cadastrar, editar, visualizar e excluir cursos que ele poderá cursar para adquirir conhecimento para dominar a tecnologia. O usuario tambem poderá dentro de uma tecnologia definir quais as tecnologias ele já domina e ver o quanto seu perfil se adequa a uma determinada trilha.
+
+Entidades persistidas e possíveis atributos:
+- Trilha
+    => id
+    => nome
+    => descrição
+    => lista de tecnologias
+
+- Tecnologia
+    => id
+    => nome
+    => descrição
+    => lista de trilhas (por exemplo, python pode ser usado tanto na trilha de back-end como dev-ops)
+    => lista de cursos
+
+- Curso
+    => id
+    => nome
+    => descrição
+    => ementa
+    => carga horária
+    => tipo de curso (EAD, presencial)
+    => instituição que oferece o curso
+    => lista de tecnologias
