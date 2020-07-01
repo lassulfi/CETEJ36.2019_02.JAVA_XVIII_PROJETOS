@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TesteEButton</string>
+    <string name="nome">Nome</string>
+    <string name="limpar">Limpar</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="erro_nome">Nome não pode ser vazio</string>
+    <string name="erro_sobrenome">Sobrenome não pode ser vazio</string>
+    <string name="campos_limpos">Campos limpos</string>
+</resources>

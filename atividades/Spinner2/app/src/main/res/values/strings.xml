@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Spinner e String-array</string>
+    <string name="marcas">Marcas</string>
+    <string name="modelos">Modelos</string>
+    <!-- Marcas -->
+    <string name="ford">Ford</string>
+    <string name="fiat">Fiat</string>
+    <string name="honda">Honda</string>
+    <!-- Modelos Ford -->
+    <string name="fiesta">Fiesta</string>
+    <string name="focus">Fusion</string>
+    <string name="fusion">Fusion</string>
+    <!-- Modelos Fiat -->
+    <string name="palio">Palio</string>
+    <string name="argo">Argo</string>
+    <string name="uno">Uno</string>
+    <!-- Modelos Honda -->
+    <string name="civic">Civic</string>
+    <string name="city">City</string>
+    <string name="fit">Fit</string>
+    <string name="nenhum_modelo_para_marca">Nenhum modelo para a marca selecionada</string>
+</resources>
