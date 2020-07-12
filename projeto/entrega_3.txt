@@ -1,0 +1,29 @@
+Entrega 3 - Transição entre Activities: Listagem de dados; cadastro de dados; e autoria do App
+Faça uma nova versão do projeto submetido na Entrega 2 criando uma nova Activity que exibirá os dados de autoria do App, e também efetivará a transição entre as Activities feitas anteriormente. 
+
+Neste projeto além do entregue na versão anterior, deve-se:
+
+Crie uma Activity que exibirá os dados de Autoria do App, são eles: Nome do aluno, curso e e-mail, breve descrição do que faz o aplicativo, logo e nome da UTFPR;
+Altere a Activity de Listagem de dados (Feito na Entrega 2), que agora não irá carregar dados de Arrays do Resource, e sim exibir dados cadastrados pela Activity de Cadastro. Para tal coloque no layout:
+Button com rótulo Adicionar, que ao ser clicado abrirá a Activity de cadastro esperando um resultado (startActivityForResult);
+Button com rótulo Sobre, que ao ser clicado abrirá a Activity de Autoria do App (startActivity). 
+Na Activity de Cadastro (Feito na Entrega 1):
+Ao clicar no Button "Salvar" deverá ser recuperado os dados da interface, validados e devolvidos a Activity de Listagem com o método setResult e resultado RESULT_OK;
+Ao executar a ação de Voltar do sistema Android devolva RESULT_CANCELED, para tal inclua o setResult dentro do método que sobrescreve o onBackPressed().
+Na Activity de Listagem trate o retorno da Activity de Cadastro dentro do método que sobrescreve o onActivityResult. Neste método receba os valores retornados, crie um objeto da entidade (Feita na Entrega 2), adicione ao ArrayList relacionado ao Adapter customizado, e por fim chame o método notifyDataSetChanged() do Adapter que forçará o redesenho dos itens dentro da ListView ou RecyclerView.
+Deve-se utilizar:
+
+O Android Studio 3.5.3 ou superior (apenas versões estáveis);
+Versão do Gradle específica da versão do Android Studio utilizada;
+Compile SDK Version para o API Level 29 (Android Q).
+Entregue o projeto do programa compactado em (.zip). Para tal, execute a opção de menu do Android Studio "File -> Export do Zip File...".
+
+Depois renomeie o arquivo compactado para ficar com o seguinte formato: "Nome Completo - Entrega 3.zip", e então submeta-o no moodle.
+
+Caso o arquivo fique com mais de 100 MB não é possível enviar ao moodle, neste caso, entre em contato com o professor para que a entrega seja feita via compartilhamento de arquivos em nuvem.
+
+Nos dias de entrega do Projeto Final, caso seja necessário, o professor poderá conversar com cada aluno para que o mesmo apresente o aplicativo criado, explique o código, e tire dúvidas sobre o desenvolvimento de cada funcionalidade.
+
+Caso o aluno não saiba apresentar o projeto, o mesma poderá ser recusado e ter a nota zerada.
+
+Caso um ou mais projetos sejam totalmente ou parcialmente plagiados, estes terão a nota zerada.
