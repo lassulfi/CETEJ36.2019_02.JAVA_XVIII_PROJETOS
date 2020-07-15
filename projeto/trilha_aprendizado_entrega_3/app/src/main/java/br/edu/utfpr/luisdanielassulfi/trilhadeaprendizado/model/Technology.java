@@ -1,6 +1,9 @@
 package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model;
 
-public class Technology {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Technology implements Parcelable {
 
     private String name;
     private String description;
@@ -20,6 +23,28 @@ public class Technology {
         this.trail = trail;
         this.percentageKnown = percentageKnown;
     }
+
+    protected Technology(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        preRequirements = in.readString();
+        time = in.readDouble();
+        isMandatory = in.readByte() != 0;
+        trail = in.readString();
+        percentageKnown = in.readDouble();
+    }
+
+    public static final Creator<Technology> CREATOR = new Creator<Technology>() {
+        @Override
+        public Technology createFromParcel(Parcel in) {
+            return new Technology(in);
+        }
+
+        @Override
+        public Technology[] newArray(int size) {
+            return new Technology[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -75,5 +100,21 @@ public class Technology {
 
     public void setPercentageKnown(double percentageKnown) {
         this.percentageKnown = percentageKnown;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(preRequirements);
+        dest.writeDouble(time);
+        dest.writeByte((byte) (isMandatory ? 1 : 0));
+        dest.writeString(trail);
+        dest.writeDouble(percentageKnown);
     }
 }

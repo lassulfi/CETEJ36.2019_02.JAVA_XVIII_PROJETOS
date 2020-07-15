@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Trilha de Aprendizado do Dev</string>
+    <string name="app_name">Trilha de Aprendizado</string>
     <string name="cadastro_tecnologia">Cadastro de Tecnologias</string>
     <string name="nome">Nome</string>
     <string name="technology_description">Descrição</string>
@@ -30,39 +30,6 @@
     <string name="technology_prerequirements_required">Pré-requisitos da tecnologia são obrigatorios</string>
     <string name="technology_time_required">Tempo de aprendizado é obrigatorio</string>
     <string name="technology_saved_with_success">"Tecnologia cadastrada com sucesso: "</string>
-    <!--    Technology names-->
-    <string name="java">Java</string>
-    <string name="c_sharp">C#</string>
-    <string name="javascript">Javascript</string>
-    <string name="python">Python</string>
-    <string name="shell_script">Shell Script</string>
-    <string name="spring_boot">Spring Boot</string>
-    <string name="hibernate">Hibernate Framework</string>
-    <string name="html">HTML 5</string>
-    <string name="css">CSS 3</string>
-    <string name="react_js">React JS Library</string>
-    <!--    Technology descriptions-->
-    <string name="java_description">Linguagem de programação para desenvolvimento de aplicações backend</string>
-    <string name="c_sharp_description">Linguagem de programação para desenvolvimento de aplicações backend</string>
-    <string name="javascript_description">Linguagem de programação para desenvolvimento de aplicações frontend</string>
-    <string name="python_description">Linguagem de programação para desenvolvimento de aplicações backend e scripts</string>
-    <string name="shell_script_description">Arquivo interpretado por programas tipo Shell utilizado para automação de deploys</string>
-    <string name="spring_boot_description">Framework Java para desenvolvimento de aplicações backend web</string>
-    <string name="hibernate_description">Framework Java para conexão com banco de dados</string>
-    <string name="html_description">Linguagem interpretada para aplicações frontend web</string>
-    <string name="css_description">Estilo cascata de estilização utilizado para aplicações frontend</string>
-    <string name="react_js_description">Biblioteca Javascript utilizada para desenvolvimento de aplicações frontend</string>
-    <!--    Technology Pre-requirements-->
-    <string name="java_prerequirements">Lógica de programação, estrutura de dados, POO</string>
-    <string name="c_sharp_prerequirements">Lógica de programação, estrutura de dados, POO</string>
-    <string name="javascript_prerequirements">Lógica de programação, estrutura de dados</string>
-    <string name="python_prerequirements">Lógica de programação, estrutura de dados, POO</string>
-    <string name="shell_script_prerequirements">Lógica de programação, infraestrutura em nuvem</string>
-    <string name="spring_boot_prerequirements">Programação para Web, Java</string>
-    <string name="hibernate_prerequirements">Java, banco de dados, SQL</string>
-    <string name="html_prerequirements">Não há</string>
-    <string name="css_prerequirements">HTML</string>
-    <string name="react_js_prerequirements">HTML, Javascript</string>
     <string name="technology_label">Tecnologia</string>
     <string name="technology_name">Nome da Tech</string>
     <string name="trail_label">Trilha</string>
@@ -77,4 +44,8 @@
     <string name="about">Sobre</string>
     <string name="add">Adicionar</string>
     <string name="go_to_list">Ir para a listagem</string>
+    <string name="error_while_saving">Erro ao cadastrar. Existem erros de validação</string>
+    <string name="create_technology">Cadastrar Tecnologia</string>
+    <string name="no_app_found">Nenhum aplicativo instalado pode atender a ação</string>
+    <string name="utfpr_website">http://www.utfpr.edu.br</string>
 </resources>

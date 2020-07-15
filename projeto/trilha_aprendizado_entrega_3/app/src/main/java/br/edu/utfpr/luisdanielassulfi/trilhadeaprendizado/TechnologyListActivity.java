@@ -1,6 +1,8 @@
 package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -33,14 +35,16 @@ public class TechnologyListActivity extends AppCompatActivity {
 
         recyclerViewTechnologies = findViewById(R.id.recyclerViewTechnologies);
 
+        technologies = new ArrayList<>();
+        technologyAdapter = new TechnologyAdapter(technologies);
+
         layoutManager = new LinearLayoutManager(this);
 
+        recyclerViewTechnologies.setAdapter(technologyAdapter);
         recyclerViewTechnologies.setLayoutManager(layoutManager);
         recyclerViewTechnologies.setHasFixedSize(true);
         recyclerViewTechnologies.addItemDecoration(new DividerItemDecoration(this,
                 LinearLayout.VERTICAL));
-
-        populateList();
 
         recyclerViewTechnologies.addOnItemTouchListener(new RecyclerItemClickListener(
                 getApplicationContext(), recyclerViewTechnologies,
@@ -74,33 +78,21 @@ public class TechnologyListActivity extends AppCompatActivity {
         startActivityForResult(intent, ResultConstants.ADD_TECHNOLOGY.getValue());
     }
 
-    private void populateList() {
-        String[] technologyNames = getResources().getStringArray(R.array.technology_names);
-        String[] technologyDescriptions = getResources().getStringArray(R.array.technology_descriptions);
-        String[] technologyPreRequirements = getResources().getStringArray(R.array.technology_pre_requirements);
-        int[] technologyTimes = getResources().getIntArray(R.array.technology_times);
-        int[] mandatoryResources = getResources().getIntArray(R.array.technology_mandatory);
-        boolean[] mandatoryTechnologies = new boolean[mandatoryResources.length];
-        for(int i = 0; i < mandatoryResources.length; i++) {
-            if(mandatoryResources[i] == 0) {
-                mandatoryTechnologies[i] = false;
-            } else {
-                mandatoryTechnologies[i] = true;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == ResultConstants.ADD_TECHNOLOGY.getValue()
+                && resultCode == Activity.RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            if(bundle != null) {
+                String message = bundle.getString(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue());
+
+                Technology technology = (Technology) bundle
+                        .getParcelable(IntentConstants.NEW_TECHNOLOGY.getValue());
+                technologies.add(technology);
+                technologyAdapter.notifyDataSetChanged();
+
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             }
         }
-        String[] technologyTrails = getResources().getStringArray(R.array.technology_trail);
-        int[] technologyKnowledges = getResources().getIntArray(R.array.technology_knowledge);
-
-        technologies = new ArrayList<>();
-
-        for(int i = 0; i < technologyNames.length; i++) {
-            Technology technology = new Technology(technologyNames[i], technologyDescriptions[i],
-                    technologyPreRequirements[i], technologyTimes[i], mandatoryTechnologies[i],
-                    technologyTrails[i], technologyKnowledges[i]);
-            technologies.add(technology);
-        }
-
-        technologyAdapter = new TechnologyAdapter(technologies);
-        recyclerViewTechnologies.setAdapter(technologyAdapter);
     }
 }

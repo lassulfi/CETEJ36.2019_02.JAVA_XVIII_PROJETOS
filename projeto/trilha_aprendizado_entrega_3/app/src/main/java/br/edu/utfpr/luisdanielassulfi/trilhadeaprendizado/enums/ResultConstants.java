@@ -1,7 +1,9 @@
 package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums;
 
 public enum ResultConstants {
-    ADD_TECHNOLOGY(1);
+    ADD_TECHNOLOGY(1),
+    SUCCESS(1000),
+    CANCELED(2000);
 
     private final int value;
 
