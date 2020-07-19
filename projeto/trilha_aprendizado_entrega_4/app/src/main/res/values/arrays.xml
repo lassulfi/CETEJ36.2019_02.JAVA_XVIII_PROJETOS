@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="percentage">
+        <item>@string/zero_percent</item>
+        <item>@string/ten_percent</item>
+        <item>@string/twenty_percent</item>
+        <item>@string/thirty_percent</item>
+        <item>@string/forty_percent</item>
+        <item>@string/fifty_percent</item>
+        <item>@string/sixty_percent</item>
+        <item>@string/seventy_percent</item>
+        <item>@string/eighty_percent</item>
+        <item>@string/ninety_percent</item>
+        <item>@string/one_hundred_percent</item>
+    </string-array>
+ </resources>
