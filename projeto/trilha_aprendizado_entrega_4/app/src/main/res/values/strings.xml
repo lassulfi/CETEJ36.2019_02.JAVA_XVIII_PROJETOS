@@ -29,7 +29,7 @@
     <string name="technology_description_required">A descrição da tecnologia é obrigatoria</string>
     <string name="technology_prerequirements_required">Pré-requisitos da tecnologia são obrigatorios</string>
     <string name="technology_time_required">Tempo de aprendizado é obrigatorio</string>
-    <string name="technology_saved_with_success">"Tecnologia cadastrada com sucesso: "</string>
+    <string name="technology_saved_with_success">Tecnologia cadastrada com sucesso!</string>
     <string name="technology_label">Tecnologia</string>
     <string name="technology_name">Nome da Tech</string>
     <string name="trail_label">Trilha</string>
@@ -45,8 +45,12 @@
     <string name="add">Adicionar</string>
     <string name="go_to_list">Ir para a listagem</string>
     <string name="error_while_saving">Erro ao cadastrar. Existem erros de validação</string>
-    <string name="create_technology">Cadastrar Tecnologia</string>
+    <string name="create_technology">Nova Tecnologia</string>
     <string name="no_app_found">Nenhum aplicativo instalado pode atender a ação</string>
     <string name="utfpr_website">http://www.utfpr.edu.br</string>
     <string name="line_separator">line.separator</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Excluir</string>
+    <string name="edit_technology">Alterar tecnologia</string>
+    <string name="tecnology_updated_with_success">Tecnologia atualizada com sucesso!</string>
 </resources>

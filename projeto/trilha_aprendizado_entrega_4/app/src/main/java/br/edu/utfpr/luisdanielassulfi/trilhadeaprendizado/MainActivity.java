@@ -3,6 +3,7 @@ package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,15 +36,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         findElements();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if(bundle != null) {
-            mode = bundle.getInt(IntentConstants.MODE.getValue(), 0);
+            mode = bundle.getInt(IntentConstants.MODE.getValue(), ResultConstants.ADD_TECHNOLOGY.getValue());
+            if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+                setTitle(getString(R.string.create_technology));
+            } else {
+                Technology technology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
+                setValuesToViewComponents(technology);
+                setTitle(getString(R.string.edit_technology));
+            }
         }
 
-        setTitle(getString(R.string.create_technology));
     }
 
     public void cleanMenuItemClick(MenuItem menuItem) {
@@ -124,16 +136,24 @@ public class MainActivity extends AppCompatActivity {
                 isValid = false;
         }
 
-        if(isValid && mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+        if(isValid) {
             Technology technology = new Technology(technologyName, technologyDescription,
                     technologyPrerequirements, time, isMandatory, technologyTrail, percentageKnown);
 
-            String message = getString(R.string.technology_saved_with_success) + technologyName;
-
             Intent intent = new Intent();
-            intent.putExtra(IntentConstants.NEW_TECHNOLOGY.getValue(), technology);
-            intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
-            intent.putExtra(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue(), message);
+            if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+                String message = getString(R.string.technology_saved_with_success);
+
+                intent.putExtra(IntentConstants.NEW_TECHNOLOGY.getValue(), technology);
+                intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+                intent.putExtra(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue(), message);
+            } else {
+                String message = getString(R.string.tecnology_updated_with_success);
+
+                intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
+                intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+                intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue(), message);
+            }
 
             finishWithSuccess(intent);
         } else {
@@ -154,7 +174,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void finishWithSuccess(Intent intent) {
-        intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+        if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+            intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+        } else {
+            intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+        }
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
@@ -181,5 +205,29 @@ public class MainActivity extends AppCompatActivity {
         technologiesRadioGroup = findViewById(R.id.radioGroupTechnologiesTrail);
 
         spinnerPercentageKnown = findViewById(R.id.spinnerPercentageKnown);
+    }
+
+    private void setValuesToViewComponents(Technology technology) {
+        editTextTechnologyName.setText(technology.getName());
+        editTextTechnologyDescription.setText(technology.getDescription());
+        editTextTechnologyPrerequirements.setText(technology.getPreRequirements());
+        editTextTechnologyRequiredTime.setText(String.valueOf(technology.getTime()));
+        checkBoxTechnologyMandatory.setChecked(technology.isMandatory());
+
+        String trail = technology.getTrail();
+        if(!trail.isEmpty()) {
+            if(trail.equals(getString(R.string.backend_technology))) {
+                technologiesRadioGroup.check(R.id.radioButtonBackendTechnology);
+            }
+            if(trail.equals(getString(R.string.technology_frontend))) {
+                technologiesRadioGroup.check(R.id.radioButtonTechnologyFrontend);
+            }
+            if(trail.equals(getString(R.string.technology_devops))) {
+                technologiesRadioGroup.check(R.id.radioButtonTechnologyDevops);
+            }
+        }
+
+        int spinnerPosition = (int) (technology.getPercentageKnown() / 10);
+        spinnerPercentageKnown.setSelection(spinnerPosition);
     }
 }
