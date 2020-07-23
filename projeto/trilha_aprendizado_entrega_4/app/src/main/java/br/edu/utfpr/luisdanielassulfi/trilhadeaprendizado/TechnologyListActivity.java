@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.adapter.TechnologyAdapter;
@@ -31,7 +32,7 @@ import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.listerners.RecyclerIte
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model.Technology;
 
 public class TechnologyListActivity extends AppCompatActivity
-        implements TechnologyAdapter.ClickAdapterListerner {
+        implements TechnologyAdapter.ClickAdapterListener {
 
     private RecyclerView recyclerViewTechnologies;
     private RecyclerView.LayoutManager layoutManager;
@@ -40,7 +41,7 @@ public class TechnologyListActivity extends AppCompatActivity
     private ArrayList<Technology> technologies;
 
     private ActionMode mActionMode;
-    private View mSelectedView;
+    private int mSelectedPosition = -1;
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
@@ -74,8 +75,14 @@ public class TechnologyListActivity extends AppCompatActivity
 
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
-            technologyAdapter.clearSelections();
-            actionMode = null;
+            final RecyclerView.ViewHolder viewHolder = recyclerViewTechnologies
+                    .findViewHolderForAdapterPosition(mSelectedPosition);
+            if(viewHolder != null) {
+                viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            }
+            technologyAdapter.setCheckedPosition(-1);
+
+            mActionMode = null;
         }
     };
 
@@ -127,26 +134,14 @@ public class TechnologyListActivity extends AppCompatActivity
                 } else {
                     message = bundle.getString(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue());
 
-                    Technology currentTechnology = technologies.get(technologyAdapter.getCheckedPosition());
-                    Technology updatedTechnology = updateTechnologyValues(currentTechnology);
+                    Technology updatedTechnology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
 
-                    technologies.set(technologyAdapter.getCheckedPosition(), updatedTechnology);
+                    technologies.set(mSelectedPosition, updatedTechnology);
+
                     technologyAdapter.notifyDataSetChanged();
+
+                    disableActionMode();
                 }
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            }
-        }
-        if(requestCode == ResultConstants.ADD_TECHNOLOGY.getValue()
-                && resultCode == Activity.RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            if(bundle != null) {
-                String message = bundle.getString(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue());
-
-                Technology technology = (Technology) bundle
-                        .getParcelable(IntentConstants.NEW_TECHNOLOGY.getValue());
-                technologies.add(technology);
-                technologyAdapter.notifyDataSetChanged();
-
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             }
         }
@@ -159,12 +154,8 @@ public class TechnologyListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRowClicked(int position) {
-        enableActionMode(position);
-    }
-
-    @Override
     public void onRowLongClicked(int position) {
+        mSelectedPosition = position;
         enableActionMode(position);
     }
 
@@ -176,17 +167,14 @@ public class TechnologyListActivity extends AppCompatActivity
         toggleSelection(position);
     }
 
-    private Technology updateTechnologyValues(Technology currentTechnology) {
-        return new Technology(currentTechnology.getName(), currentTechnology.getDescription(),
-                currentTechnology.getPreRequirements(), currentTechnology.getTime(),
-                currentTechnology.isMandatory(), currentTechnology.getTrail(),
-                currentTechnology.getPercentageKnown());
+    private void disableActionMode() {
+        mActionMode = null;
+        mSelectedPosition = -1;
     }
 
     private void toggleSelection(int position) {
         technologyAdapter.toggleSelection(position);
     }
-
 
     private void deleteTechnology() {
         int position = technologyAdapter.getCheckedPosition();
@@ -194,10 +182,11 @@ public class TechnologyListActivity extends AppCompatActivity
 
         technologyAdapter.notifyDataSetChanged();
 
-        mActionMode = null;
+        disableActionMode();
     }
 
     private void editTechnology() {
+        mSelectedPosition = technologyAdapter.getCheckedPosition();
         Technology technology = technologyAdapter.getSelectedItem();
         showEditActivity(technology);
     }

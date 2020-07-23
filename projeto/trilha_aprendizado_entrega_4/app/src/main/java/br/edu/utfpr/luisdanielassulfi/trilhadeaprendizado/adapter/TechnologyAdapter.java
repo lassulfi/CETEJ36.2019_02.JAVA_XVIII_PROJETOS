@@ -25,14 +25,15 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
     private Context context;
     private List<Technology> technologies;
 
-    private ClickAdapterListerner listerner;
+    private ClickAdapterListener listener;
 
     private int checkedPosition = 0;
 
-    public TechnologyAdapter(Context context, List<Technology> technologies, ClickAdapterListerner listener) {
+    public TechnologyAdapter(Context context, List<Technology> technologies,
+                             ClickAdapterListener listener) {
         this.context = context;
         this.technologies = technologies;
-        this.listerner = listener;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +44,7 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
 
         return new MyViewHolder(listItem);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
@@ -57,20 +59,18 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
     }
 
     private void applyClickEvents(MyViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                listerner.onRowClicked(position);
-            }
-        });
-
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                listerner.onRowLongClicked(position);
-                v.setBackgroundColor(Color.LTGRAY);
+                listener.onRowLongClicked(position);
                 v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+
+                if(checkedPosition == position) {
+                    v.setBackgroundColor(Color.LTGRAY);
+                } else {
+                    v.setBackgroundColor(Color.TRANSPARENT);
+                }
+
                 return true;
             }
         });
@@ -85,21 +85,12 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
         return checkedPosition != -1 ? technologies.get(checkedPosition) : null;
     }
 
-    public void removeData(Integer position) {
-        technologies.remove(position);
-        resetCheckedPostion();
-    }
-
-    private void resetCheckedPostion() {
-        checkedPosition = -1;
-    }
-
     public void toggleSelection(int position) {
         checkedPosition = position;
         notifyItemChanged(position);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder
+    public class MyViewHolder extends RecyclerView.ViewHolder
             implements View.OnLongClickListener {
         TextView textViewTechnologyName, textViewTechnologyTrail;
 
@@ -114,13 +105,15 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
 
         @Override
         public boolean onLongClick(View v) {
-            return false;
+            listener.onRowLongClicked(getAdapterPosition());
+            v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            return true;
         }
-    }
 
-    public void clearSelections() {
-        resetCheckedPostion();
-        notifyDataSetChanged();
+        @Override
+        public String toString() {
+            return super.toString();
+        }
     }
 
     public int getCheckedPosition() {
@@ -131,9 +124,7 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
         this.checkedPosition = checkedPosition;
     }
 
-    public interface ClickAdapterListerner {
-        void onRowClicked(int position);
-
+    public interface ClickAdapterListener {
         void onRowLongClicked(int position);
     }
 }
