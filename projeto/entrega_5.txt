@@ -1,0 +1,27 @@
+Entrega 5 - Uso de SharedPreferences e Internacionalização para dois idiomas
+Faça uma nova versão do projeto submetido na Entrega 4 incluindo a persistência através de SharedPreferences de configurações do aplicativo e a internacionalização para dois idiomas. 
+
+Neste projeto além do entregue na versão anterior, deve-se:
+
+Internacionalizar o aplicativo incorporando suporte a dois idiomas, o Inglês geral como padrão e o português do Brasil como opcional.
+Todos os textos fixos de interface devem ter as duas opções de tradução, sejam os apresentados na Activity ou os mostrados em janelas modais ou em caixas de mensagens (como Toast).
+Incorporar alguma funcionalidade de configuração/personalização do aplicativo por parte do usuário, sendo que as escolhas feitas por ele serão persistidas no dispositivo através do uso de SharedPreferences.
+Exemplos: escolher forma de ordenação de itens em uma lista; se campos do cadastro já aparecerão com sugestão de preenchimento; se o aplicativo será apresentado utilizando outro tema ou o modo noturno; mostrar as funcionalidades mais usadas em destaque; e etc.
+Não serão aceitos trocar a cor de fundo de layout (exemplo passado), ou salvar login e senha de usuário (visto que o aplicativo é para uso sem conexão).
+Deve-se utilizar:
+
+O Android Studio 3.5.3 ou superior (apenas versões estáveis);
+Versão do Gradle específica da versão do Android Studio utilizada;
+Minimum API Level 15 (minSdkVersion 15 no build.gradle (Module: app), que irá alterar a geração do AndroidManifest.xml);
+Compile SDK Version para o API Level 29 (Android Q).
+Entregue o projeto do programa compactado em (.zip). Para tal, execute a opção de menu do Android Studio "File -> Export do Zip File...".
+
+Depois renomeie o arquivo compactado para ficar com o seguinte formato: "Nome Completo - Entrega 5.zip", e então submeta-o no moodle.
+
+Caso o arquivo fique com mais de 100 MB não é possível enviar ao moodle, neste caso, entre em contato com o professor para que a entrega seja feita via compartilhamento de arquivos em nuvem.
+
+Nos dias de entrega do Projeto Final, caso seja necessário, o professor poderá conversar com cada aluno para que o mesmo apresente o aplicativo criado, explique o código, e tire dúvidas sobre o desenvolvimento de cada funcionalidade.
+
+Caso o aluno não saiba apresentar o projeto, o mesma poderá ser recusado e ter a nota zerada.
+
+Caso um ou mais projetos sejam totalmente ou parcialmente plagiados, estes terão a nota zerada.

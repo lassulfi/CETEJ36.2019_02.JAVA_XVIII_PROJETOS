@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Learning Trail</string>
+    <string name="cadastro_tecnologia">Technology Register</string>
+    <string name="nome">Name</string>
+    <string name="technology_description">Description</string>
+    <string name="technology_prerequisite">Prerequisites</string>
+    <string name="technology_required_time">Learning time (hours):</string>
+    <string name="technology_mandatoryq">Mandatory</string>
+    <string name="backend_technology" translatable="false">Backend</string>
+    <string name="technology_frontend" translatable="false">Frontend</string>
+    <string name="technology_devops" translatable="false">DevOps</string>
+    <string name="percentage_know">Knowledge (%)</string>
+    <string name="zero_percent" translatable="false">0 %</string>
+    <string name="ten_percent" translatable="false">10 %</string>
+    <string name="twenty_percent" translatable="false">20 %</string>
+    <string name="thirty_percent" translatable="false">30 %</string>
+    <string name="forty_percent" translatable="false">40 %</string>
+    <string name="fifty_percent" translatable="false">50 %</string>
+    <string name="sixty_percent" translatable="false">60 %</string>
+    <string name="seventy_percent" translatable="false">70 %</string>
+    <string name="eighty_percent" translatable="false">80 %</string>
+    <string name="ninety_percent" translatable="false">90 %</string>
+    <string name="one_hundred_percent" translatable="false">100 %</string>
+    <string name="clean_screen">Clean form</string>
+    <string name="clean_all_elements">Form fields clear</string>
+    <string name="save">Save</string>
+    <string name="no_trail_selected">No trail selected</string>
+    <string name="technology_name_required">Field name is required</string>
+    <string name="technology_prerequirements_required">Technology prerequisites are required</string>
+    <string name="technology_time_required">Learning time is required</string>
+    <string name="technology_saved_with_success">Technology successfully registered!</string>
+    <string name="technology_name">Technology name</string>
+    <string name="trail_label">Trail</string>
+    <string name="trail_name">Trail name</string>
+    <string name="recieved_a_click">received a click!</string>
+    <string name="recieved_a_long_click">" received a long click!"</string>
+    <string name="developer_name" translatable="false">Luis Daniel Assulfi</string>
+    <string name="course_name">CETEJ36 - Java Development for Mobile Devices</string>
+    <string name="developer_email" translatable="false">lassulfi@gmail.com</string>
+    <string name="app_description">This App allows the user to see the trails to become a developer. Within the app the user can choose which learning path to follow, for example front-end, back-end, mobile and dev-ops.</string>
+    <string name="university_name">FEDERAL TECHNOLOGICAL UNIVERSITY OF PARANÁ</string>
+    <string name="about">About</string>
+    <string name="add">Add</string>
+    <string name="go_to_list">Go to technology list</string>
+    <string name="error_while_saving">Error while saving. There are validation errors.</string>
+    <string name="create_technology">New Technology</string>
+    <string name="no_app_found">No installed apps can handle the action</string>
+    <string name="utfpr_website" translatable="false">http://www.utfpr.edu.br</string>
+    <string name="line_separator">line.separator</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_technology">Update technology</string>
+    <string name="technology_description_required">Tehcnology description is mandatory</string>
+    <string name="technology_label">Technology</string>
+    <string name="tecnology_updated_with_success">Technology updated with success!</string>
+</resources>
