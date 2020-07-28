@@ -12,5 +12,35 @@
         android:id="@+id/menuItemAbout"
         android:onClick="showAboutActivity"
         android:title="@string/about"
-        app:showAsAction="never" />
+        app:showAsAction="never" ></item>
+    <item
+        android:id="@+id/menuItemPreferences"
+        android:title="@string/preferences"
+        app:showAsAction="never" >
+        <menu >
+            <group
+                android:id="@+id/groupSortBy"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menuItemSortByTaskAsc"
+                    android:title="@string/sort_by_tech_asc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTechDesk"
+                    android:title="@string/sort_by_tech_desc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTrailAsc"
+                    android:title="@string/sort_by_trail_asc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTrailDesc"
+                    android:title="@string/sort_by_trail_desc"
+                    app:showAsAction="never" />
+            </group>
+            <item
+                android:id="@+id/menuItemDarkMode"
+                android:title="@string/dark_mode" />
+        </menu>
+    </item>
 </menu>

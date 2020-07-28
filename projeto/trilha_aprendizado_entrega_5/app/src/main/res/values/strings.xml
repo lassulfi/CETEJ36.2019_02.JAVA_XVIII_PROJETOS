@@ -53,4 +53,10 @@
     <string name="technology_description_required">Tehcnology description is mandatory</string>
     <string name="technology_label">Technology</string>
     <string name="tecnology_updated_with_success">Technology updated with success!</string>
+    <string name="preferences">Preferences</string>
+    <string name="sort_by_tech_asc">Sort by tech ASC</string>
+    <string name="sort_by_tech_desc">Sort by Tech DESC</string>
+    <string name="sort_by_trail_asc">Sort by trail ASC</string>
+    <string name="sort_by_trail_desc">Sort by Trail DESC</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>
