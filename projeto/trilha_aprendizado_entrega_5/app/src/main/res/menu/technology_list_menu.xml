@@ -22,11 +22,11 @@
                 android:id="@+id/groupSortBy"
                 android:checkableBehavior="single">
                 <item
-                    android:id="@+id/menuItemSortByTaskAsc"
+                    android:id="@+id/menuItemSortByTechAsc"
                     android:title="@string/sort_by_tech_asc"
                     app:showAsAction="never" />
                 <item
-                    android:id="@+id/menuItemSortByTechDesk"
+                    android:id="@+id/menuItemSortByTechDesc"
                     android:title="@string/sort_by_tech_desc"
                     app:showAsAction="never" />
                 <item
@@ -40,6 +40,8 @@
             </group>
             <item
                 android:id="@+id/menuItemDarkMode"
+                android:checkable="true"
+                android:onClick="menuItemDarkModeClick"
                 android:title="@string/dark_mode" />
         </menu>
     </item>

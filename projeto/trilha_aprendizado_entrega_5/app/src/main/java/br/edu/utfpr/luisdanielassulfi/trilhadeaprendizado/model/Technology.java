@@ -3,6 +3,8 @@ package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
+
 public class Technology implements Parcelable {
 
     private String name;
@@ -117,4 +119,44 @@ public class Technology implements Parcelable {
         dest.writeString(trail);
         dest.writeDouble(percentageKnown);
     }
+
+    /**
+     * Sort technology by name in ascending order
+     */
+    public static Comparator<Technology> technologyNameComparatorAsc = new Comparator<Technology>() {
+        @Override
+        public int compare(Technology o1, Technology o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    };
+
+    /**
+     * Sort by technology name in descending order
+     */
+    public static Comparator<Technology> technologyNameComparatorDesc = new Comparator<Technology>() {
+        @Override
+        public int compare(Technology o1, Technology o2) {
+            return o2.getName().compareTo(o1.getName());
+        }
+    };
+
+    /**
+     * Sort by trail in ascending order
+     */
+    public static Comparator<Technology> trailComparatorAsc = new Comparator<Technology>() {
+        @Override
+        public int compare(Technology o1, Technology o2) {
+            return o1.getTrail().compareTo(o2.getTrail());
+        }
+    };
+
+    /**
+     * Sort by trail in descending order
+     */
+    public static Comparator<Technology> trailComparatorDesc = new Comparator<Technology>() {
+        @Override
+        public int compare(Technology o1, Technology o2) {
+            return o2.getTrail().compareTo(o1.getTrail());
+        }
+    };
 }
