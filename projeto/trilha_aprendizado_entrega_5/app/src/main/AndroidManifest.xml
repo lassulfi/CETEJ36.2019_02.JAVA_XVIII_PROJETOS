@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".TechnologyActivity"
             android:parentActivityName=".TechnologyListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

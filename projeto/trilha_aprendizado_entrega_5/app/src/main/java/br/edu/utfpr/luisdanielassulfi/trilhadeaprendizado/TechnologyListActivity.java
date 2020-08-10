@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -125,7 +124,7 @@ public class TechnologyListActivity extends AppCompatActivity
     }
 
     public void showAddActivity(MenuItem menuItem) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TechnologyActivity.class);
         intent.putExtra(IntentConstants.MODE.getValue(), ResultConstants.ADD_TECHNOLOGY.getValue());
         startActivityForResult(intent, ResultConstants.ADD_TECHNOLOGY.getValue());
     }
@@ -250,7 +249,7 @@ public class TechnologyListActivity extends AppCompatActivity
     }
 
     private void showEditActivity(Technology technology) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TechnologyActivity.class);
         intent.putExtra(IntentConstants.MODE.getValue(), ResultConstants.EDIT_TECHNOLOGY.getValue());
         intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
 

@@ -1,18 +1,36 @@
 package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Comparator;
 
+@Entity(tableName = "technologies")
 public class Technology implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    @NonNull
     private String name;
+
+    @NonNull
     private String description;
+
+    @NonNull
     private String preRequirements;
+
+    @NonNull
     private double time;
+
     private boolean isMandatory;
+
+    @NonNull
     private String trail;
+
     private double percentageKnown;
 
     public Technology(String name, String description, String preRequirements, double time,
@@ -27,6 +45,7 @@ public class Technology implements Parcelable {
     }
 
     protected Technology(Parcel in) {
+        id = in.readLong();
         name = in.readString();
         description = in.readString();
         preRequirements = in.readString();
@@ -48,35 +67,47 @@ public class Technology implements Parcelable {
         }
     };
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
+    @NonNull
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NonNull  String description) {
         this.description = description;
     }
 
+    @NonNull
     public String getPreRequirements() {
         return preRequirements;
     }
 
-    public void setPreRequirements(String preRequirements) {
+    public void setPreRequirements(@NonNull String preRequirements) {
         this.preRequirements = preRequirements;
     }
 
+    @NonNull
     public double getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(@NonNull double time) {
         this.time = time;
     }
 
@@ -88,11 +119,13 @@ public class Technology implements Parcelable {
         isMandatory = mandatory;
     }
 
+    @NonNull
     public String getTrail() {
         return trail;
     }
 
-    public void setTrail(String trail) {
+    @NonNull
+    public void setTrail(@NonNull String trail) {
         this.trail = trail;
     }
 
@@ -111,6 +144,7 @@ public class Technology implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(preRequirements);

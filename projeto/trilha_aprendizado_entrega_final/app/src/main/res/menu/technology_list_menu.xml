@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemAddTechnology"
+        android:icon="@android:drawable/ic_menu_add"
+        android:onClick="showAddActivity"
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuItemAbout"
+        android:onClick="showAboutActivity"
+        android:title="@string/about"
+        app:showAsAction="never" ></item>
+    <item
+        android:id="@+id/menuItemPreferences"
+        android:title="@string/preferences"
+        app:showAsAction="never" >
+        <menu >
+            <group
+                android:id="@+id/groupSortBy"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menuItemSortByTechAsc"
+                    android:title="@string/sort_by_tech_asc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTechDesc"
+                    android:title="@string/sort_by_tech_desc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTrailAsc"
+                    android:title="@string/sort_by_trail_asc"
+                    app:showAsAction="never" />
+                <item
+                    android:id="@+id/menuItemSortByTrailDesc"
+                    android:title="@string/sort_by_trail_desc"
+                    app:showAsAction="never" />
+            </group>
+            <item
+                android:id="@+id/menuItemDarkMode"
+                android:checkable="true"
+                android:onClick="menuItemDarkModeClick"
+                android:title="@string/dark_mode" />
+        </menu>
+    </item>
+</menu>

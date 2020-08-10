@@ -1,0 +1,32 @@
+Crie um aplicativo que atenda as seguintes funcionalidades:
+
+Especifique o tema que trata a aplicação. Este tema deverá ter sido lançado pelo aluno no questionário a parte sobre "Tema do Projeto", e o mesmo deve ser aprovado previamente pelo professor. Deve-se evitar temas repetidos dentro da turma.
+Cadastre dados lançados pelo usuário, que tenham relação com a regra de negócio proposta para a aplicação (Nesta versão os dados serão persistidos no SQLite através do uso do Room);
+Crie pelo menos uma Classe de Entidade a ser manipulada dentro da aplicação;
+Crie pelo menos uma Activity que permita a manipulação dos dados (Inserção, Alteração e Remoção);
+Exiba um AlertDialog para confirmar a ação do usuário antes de excluir dados persistidos; 
+Crie pelo menos uma Activity que liste os itens cadastrados no banco de dados;
+Utilize pelo menos um Adapter Customizado em uma Activity que liste os itens;
+Crie uma Activity onde mostra-se as informações sobre o que faz o aplicativo, e os dados da autoria dele;
+Utilize Menus de Opções, onde as ações aparecem com ícones na barra de ação da Activity;
+Utilize Menu de Ação Contextual, onde as ações aparecem com ícones na barra de ação da Activity;
+Utilize botões Up na barra de ações das Activities secundárias, para facilitar a volta do usuário destas para as Activities especificadas como pais destas;
+Forneça alguma possibilidade de configuração ou personalização do aplicativo, e persista estas informações usando SharedPreferences; 
+O Aplicativo deve suportar dois idiomas, o inglês como padrão e o português Brasileiro como opcional.
+Deve-se utilizar:
+
+Android Studio 3.5.3 ou superior (apenas versões estáveis);
+Versão do Gradle específica da versão do Android Studio utilizada;
+Minimum API Level 15 (minSdkVersion 15 no build.gradle (Module: app), que irá alterar a geração do AndroidManifest.xml);
+Compile SDK Version para o API Level 29 (Android Q).
+Entregue o projeto do programa compactado em (.zip). Para tal, execute a opção de menu do Android Studio "File -> Export do Zip File...".
+
+Depois renomeie o arquivo compactado para ficar com o seguinte formato: "Nome Completo - Entrega Final.zip", e então submeta-o no moodle.
+
+Caso o arquivo fique com mais de 100 MB não é possível enviar ao moodle, neste caso, entre em contato com o professor para que a entrega seja feita via compartilhamento de arquivos em nuvem.
+
+Nos dias de entrega do Projeto Final, caso seja necessário, o professor poderá conversar com cada aluno para que o mesmo apresente o aplicativo criado, explique o código, e tire dúvidas sobre o desenvolvimento de cada funcionalidade.
+
+Caso o aluno não saiba apresentar o projeto, o mesma poderá ser recusado e ter a nota zerada.
+
+Caso um ou mais projetos sejam totalmente ou parcialmente plagiados, estes terão a nota zerada.
