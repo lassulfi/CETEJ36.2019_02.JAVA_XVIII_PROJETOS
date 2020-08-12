@@ -2,9 +2,11 @@ package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,18 +19,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.adapter.TechnologyAdapter;
+import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.database.TechnologiesDatabase;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums.IntentConstants;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums.ResultConstants;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums.SortingConstants;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model.Technology;
+import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.utils.AlertDialogUtils;
 
 public class TechnologyListActivity extends AppCompatActivity
         implements TechnologyAdapter.ClickAdapterListener {
@@ -42,7 +48,7 @@ public class TechnologyListActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private TechnologyAdapter technologyAdapter;
 
-    private ArrayList<Technology> technologies;
+    private List<Technology> mTechnologies;
 
     private ActionMode mActionMode;
     private int mSelectedPosition = -1;
@@ -100,8 +106,8 @@ public class TechnologyListActivity extends AppCompatActivity
 
         recyclerViewTechnologies = findViewById(R.id.recyclerViewTechnologies);
 
-        technologies = new ArrayList<>();
-        technologyAdapter = new TechnologyAdapter(this, technologies, this);
+        mTechnologies = new ArrayList<>();
+        technologyAdapter = new TechnologyAdapter(this, mTechnologies, this);
 
         layoutManager = new LinearLayoutManager(this);
 
@@ -112,6 +118,8 @@ public class TechnologyListActivity extends AppCompatActivity
                 LinearLayout.VERTICAL));
 
         registerForContextMenu(recyclerViewTechnologies);
+
+        retrieveTechnologiesFromDatabase();
 
         getSortingPreferences();
 
@@ -140,14 +148,14 @@ public class TechnologyListActivity extends AppCompatActivity
 
                     Technology technology = (Technology) bundle
                             .getParcelable(IntentConstants.NEW_TECHNOLOGY.getValue());
-                    technologies.add(technology);
+                    mTechnologies.add(technology);
                     technologyAdapter.notifyDataSetChanged();
                 } else {
                     message = bundle.getString(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue());
 
                     Technology updatedTechnology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
 
-                    technologies.set(mSelectedPosition, updatedTechnology);
+                    mTechnologies.set(mSelectedPosition, updatedTechnology);
 
                     technologyAdapter.notifyDataSetChanged();
 
@@ -216,6 +224,25 @@ public class TechnologyListActivity extends AppCompatActivity
         setNightModePreference(menuItem.isChecked());
     }
 
+    private void retrieveTechnologiesFromDatabase() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                TechnologiesDatabase database = TechnologiesDatabase
+                        .getInstance(TechnologyListActivity.this);
+
+                mTechnologies = database.technologyDao().findAll();
+
+                TechnologyListActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        technologyAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
+
     private void enableActionMode(int position) {
         if(mActionMode == null) {
             mActionMode = startSupportActionMode(mActionModeCallback);
@@ -235,7 +262,34 @@ public class TechnologyListActivity extends AppCompatActivity
 
     private void deleteTechnology() {
         int position = technologyAdapter.getCheckedPosition();
-        technologies.remove(position);
+        final Technology technology = technologyAdapter.getSelectedItem();
+
+        String confirmMessage = getString(R.string.confirm_delete_technology_question) + "\n" +
+                technology.getName();
+
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                TechnologiesDatabase database = TechnologiesDatabase
+                                        .getInstance(TechnologyListActivity.this);
+                                database.technologyDao().delete(technology);
+                                //TODO: verificar se é necessário chamar o método para recuperar a
+                                // lista de tecnologias cadastradas
+                            }
+                        });
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        AlertDialogUtils.showConfirmActionDialog(this, confirmMessage, listener);
 
         technologyAdapter.notifyDataSetChanged();
 
@@ -313,7 +367,7 @@ public class TechnologyListActivity extends AppCompatActivity
     }
 
     private void sortTechnologyListBy(Comparator<Technology> comparator) {
-        Collections.sort(technologies, comparator);
+        Collections.sort(mTechnologies, comparator);
         technologyAdapter.notifyDataSetChanged();
     }
 

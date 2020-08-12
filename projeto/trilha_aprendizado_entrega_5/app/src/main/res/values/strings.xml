@@ -59,4 +59,8 @@
     <string name="sort_by_trail_asc">Sort by trail ASC</string>
     <string name="sort_by_trail_desc">Sort by Trail DESC</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="confirm_delete_technology_question">Do you really wish to delete this technology?</string>
+    <string name="confirm">Confirm</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

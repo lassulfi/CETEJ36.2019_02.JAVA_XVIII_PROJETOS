@@ -2,6 +2,7 @@ package br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.database.TechnologiesDatabase;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums.IntentConstants;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.enums.ResultConstants;
 import br.edu.utfpr.luisdanielassulfi.trilhadeaprendizado.model.Technology;
@@ -139,16 +141,20 @@ public class TechnologyActivity extends AppCompatActivity {
             Technology technology = new Technology(technologyName, technologyDescription,
                     technologyPrerequirements, time, isMandatory, technologyTrail, percentageKnown);
 
+            saveOrUpdateTechnology(mode, technology);
+
             Intent intent = new Intent();
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                 String message = getString(R.string.technology_saved_with_success);
 
+                //TODO: remover a passagem da tecnologia para a List
                 intent.putExtra(IntentConstants.NEW_TECHNOLOGY.getValue(), technology);
                 intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue(), message);
             } else {
                 String message = getString(R.string.tecnology_updated_with_success);
 
+                //TODO: remover a passagem da tecnologia para a List
                 intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
                 intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue(), message);
@@ -170,6 +176,20 @@ public class TechnologyActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
+    }
+
+    private void saveOrUpdateTechnology(final int mode, final Technology technology) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                TechnologiesDatabase database = TechnologiesDatabase.getInstance(TechnologyActivity.this);
+                if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+                    database.technologyDao().insert(technology);
+                } else {
+                    database.technologyDao().update(technology);
+                }
+            }
+        });
     }
 
     private void finishWithSuccess(Intent intent) {
