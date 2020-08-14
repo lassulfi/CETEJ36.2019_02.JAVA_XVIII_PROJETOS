@@ -109,17 +109,16 @@ public class TechnologyListActivity extends AppCompatActivity
         mTechnologies = new ArrayList<>();
         technologyAdapter = new TechnologyAdapter(this, mTechnologies, this);
 
+        retrieveTechnologiesFromDatabase();
+
         layoutManager = new LinearLayoutManager(this);
 
-        recyclerViewTechnologies.setAdapter(technologyAdapter);
         recyclerViewTechnologies.setLayoutManager(layoutManager);
         recyclerViewTechnologies.setHasFixedSize(true);
         recyclerViewTechnologies.addItemDecoration(new DividerItemDecoration(this,
                 LinearLayout.VERTICAL));
 
         registerForContextMenu(recyclerViewTechnologies);
-
-        retrieveTechnologiesFromDatabase();
 
         getSortingPreferences();
 
@@ -145,23 +144,13 @@ public class TechnologyListActivity extends AppCompatActivity
                 String message = "";
                 if(requestCode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                     message = bundle.getString(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue());
-
-                    Technology technology = (Technology) bundle
-                            .getParcelable(IntentConstants.NEW_TECHNOLOGY.getValue());
-                    mTechnologies.add(technology);
-                    technologyAdapter.notifyDataSetChanged();
                 } else {
                     message = bundle.getString(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue());
-
-                    Technology updatedTechnology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
-
-                    mTechnologies.set(mSelectedPosition, updatedTechnology);
-
-                    technologyAdapter.notifyDataSetChanged();
-
                     disableActionMode();
                 }
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+                retrieveTechnologiesFromDatabase();
             }
         }
     }
@@ -187,6 +176,13 @@ public class TechnologyListActivity extends AppCompatActivity
 
         sortMenuItem.setChecked(true);
         return true;
+    }
+
+    @Override
+    public void onRowClicked(int position) {
+        mSelectedPosition = position;
+        Technology technology = technologyAdapter.getSelectedItem();
+        showTechnologyActivityInViewMode(technology);
     }
 
     @Override
@@ -236,7 +232,8 @@ public class TechnologyListActivity extends AppCompatActivity
                 TechnologyListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        technologyAdapter.notifyDataSetChanged();
+                        technologyAdapter.setTechnologies(mTechnologies);
+                        recyclerViewTechnologies.setAdapter(technologyAdapter);
                     }
                 });
             }
@@ -261,7 +258,6 @@ public class TechnologyListActivity extends AppCompatActivity
     }
 
     private void deleteTechnology() {
-        int position = technologyAdapter.getCheckedPosition();
         final Technology technology = technologyAdapter.getSelectedItem();
 
         String confirmMessage = getString(R.string.confirm_delete_technology_question) + "\n" +
@@ -278,8 +274,16 @@ public class TechnologyListActivity extends AppCompatActivity
                                 TechnologiesDatabase database = TechnologiesDatabase
                                         .getInstance(TechnologyListActivity.this);
                                 database.technologyDao().delete(technology);
-                                //TODO: verificar se é necessário chamar o método para recuperar a
-                                // lista de tecnologias cadastradas
+
+                                mTechnologies = database.technologyDao().findAll();
+
+                                TechnologyListActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        technologyAdapter.setTechnologies(mTechnologies);
+                                        technologyAdapter.notifyDataSetChanged();
+                                    }
+                                });
                             }
                         });
                         break;
@@ -308,6 +312,14 @@ public class TechnologyListActivity extends AppCompatActivity
         intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
 
         startActivityForResult(intent, ResultConstants.EDIT_TECHNOLOGY.getValue());
+    }
+
+    private void showTechnologyActivityInViewMode(Technology technology) {
+        Intent intent = new Intent(this, TechnologyActivity.class);
+        intent.putExtra(IntentConstants.MODE.getValue(), ResultConstants.VIEW_TECHNOLOGY.getValue());
+        intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
+
+        startActivityForResult(intent, ResultConstants.VIEW_TECHNOLOGY.getValue());
     }
 
     private void getSortingPreferences() {
@@ -366,7 +378,7 @@ public class TechnologyListActivity extends AppCompatActivity
         }
     }
 
-    private void sortTechnologyListBy(Comparator<Technology> comparator) {
+    private void sortTechnologyListBy(final Comparator<Technology> comparator) {
         Collections.sort(mTechnologies, comparator);
         technologyAdapter.notifyDataSetChanged();
     }

@@ -59,6 +59,13 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
     }
 
     private void applyClickEvents(MyViewHolder holder, final int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRowClicked(position);
+            }
+        });
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -91,7 +98,7 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder
-            implements View.OnLongClickListener {
+            implements View.OnLongClickListener{
         TextView textViewTechnologyName, textViewTechnologyTrail;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -125,6 +132,16 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
     }
 
     public interface ClickAdapterListener {
+        void onRowClicked(int position);
+
         void onRowLongClicked(int position);
+    }
+
+    public List<Technology> getTechnologies() {
+        return technologies;
+    }
+
+    public void setTechnologies(List<Technology> technologies) {
+        this.technologies = technologies;
     }
 }

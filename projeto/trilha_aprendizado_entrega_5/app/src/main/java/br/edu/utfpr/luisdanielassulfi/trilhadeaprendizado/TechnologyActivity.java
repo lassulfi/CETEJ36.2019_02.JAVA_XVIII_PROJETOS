@@ -50,13 +50,17 @@ public class TechnologyActivity extends AppCompatActivity {
             mode = bundle.getInt(IntentConstants.MODE.getValue(), ResultConstants.ADD_TECHNOLOGY.getValue());
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                 setTitle(getString(R.string.create_technology));
-            } else {
+            } else if (mode == ResultConstants.EDIT_TECHNOLOGY.getValue()) {
                 Technology technology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
                 setValuesToViewComponents(technology);
                 setTitle(getString(R.string.edit_technology));
+            } else {
+                disableAllComponents();
+                Technology technology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
+                setValuesToViewComponents(technology);
+                setTitle(getString(R.string.view_technology));
             }
         }
-
     }
 
     public void cleanMenuItemClick(MenuItem menuItem) {
@@ -147,15 +151,11 @@ public class TechnologyActivity extends AppCompatActivity {
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                 String message = getString(R.string.technology_saved_with_success);
 
-                //TODO: remover a passagem da tecnologia para a List
-                intent.putExtra(IntentConstants.NEW_TECHNOLOGY.getValue(), technology);
                 intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue(), message);
             } else {
                 String message = getString(R.string.tecnology_updated_with_success);
 
-                //TODO: remover a passagem da tecnologia para a List
-                intent.putExtra(IntentConstants.SELECTED_TECHNOLOGY.getValue(), technology);
                 intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue(), message);
             }
@@ -173,7 +173,10 @@ public class TechnologyActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        if(mode == ResultConstants.ADD_TECHNOLOGY.getValue() ||
+                mode == ResultConstants.EDIT_TECHNOLOGY.getValue()) {
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+        }
 
         return true;
     }
@@ -248,5 +251,17 @@ public class TechnologyActivity extends AppCompatActivity {
 
         int spinnerPosition = (int) (technology.getPercentageKnown() / 10);
         spinnerPercentageKnown.setSelection(spinnerPosition);
+    }
+
+    private void disableAllComponents() {
+        editTextTechnologyName.setFocusable(false);
+        editTextTechnologyDescription.setFocusable(false);
+        editTextTechnologyPrerequirements.setFocusable(false);
+        editTextTechnologyPrerequirements.setFocusable(false);
+        editTextTechnologyRequiredTime.setFocusable(false);
+        checkBoxTechnologyMandatory.setFocusable(false);
+        checkBoxTechnologyMandatory.setEnabled(false);
+        technologiesRadioGroup.setEnabled(false);
+        technologiesRadioGroup.setFocusable(false);
     }
 }
