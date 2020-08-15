@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,6 +33,8 @@ public class TechnologyActivity extends AppCompatActivity {
 
     private int mode;
 
+    private Technology mTechnology;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +54,11 @@ public class TechnologyActivity extends AppCompatActivity {
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                 setTitle(getString(R.string.create_technology));
             } else if (mode == ResultConstants.EDIT_TECHNOLOGY.getValue()) {
-                Technology technology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
-                setValuesToViewComponents(technology);
+                setValuesToViewComponents(bundle);
                 setTitle(getString(R.string.edit_technology));
             } else {
                 disableAllComponents();
-                Technology technology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
-                setValuesToViewComponents(technology);
+                setValuesToViewComponents(bundle);
                 setTitle(getString(R.string.view_technology));
             }
         }
@@ -142,23 +143,30 @@ public class TechnologyActivity extends AppCompatActivity {
         }
 
         if(isValid) {
-            Technology technology = new Technology(technologyName, technologyDescription,
-                    technologyPrerequirements, time, isMandatory, technologyTrail, percentageKnown);
 
-            saveOrUpdateTechnology(mode, technology);
 
             Intent intent = new Intent();
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
+                mTechnology = new Technology(technologyName, technologyDescription,
+                        technologyPrerequirements, time, isMandatory, technologyTrail,
+                        percentageKnown);
+
                 String message = getString(R.string.technology_saved_with_success);
 
-                intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+                intent.putExtra(IntentConstants.ADD_TECHNOLOGY_STATUS.getValue(),
+                        ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.ADD_TECHNOLOGY_MESSAGE.getValue(), message);
             } else {
                 String message = getString(R.string.tecnology_updated_with_success);
+                updateValues(mTechnology, technologyName, technologyDescription,
+                        technologyPrerequirements, time, isMandatory, technologyTrail,
+                        percentageKnown);
 
-                intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(), ResultConstants.SUCCESS.getValue());
+                intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_STATUS.getValue(),
+                        ResultConstants.SUCCESS.getValue());
                 intent.putExtra(IntentConstants.UPDATE_TECHNOLOGY_MESSAGE.getValue(), message);
             }
+            saveOrUpdateTechnology(mode, mTechnology);
 
             finishWithSuccess(intent);
         } else {
@@ -229,14 +237,16 @@ public class TechnologyActivity extends AppCompatActivity {
         spinnerPercentageKnown = findViewById(R.id.spinnerPercentageKnown);
     }
 
-    private void setValuesToViewComponents(Technology technology) {
-        editTextTechnologyName.setText(technology.getName());
-        editTextTechnologyDescription.setText(technology.getDescription());
-        editTextTechnologyPrerequirements.setText(technology.getPreRequirements());
-        editTextTechnologyRequiredTime.setText(String.valueOf(technology.getTime()));
-        checkBoxTechnologyMandatory.setChecked(technology.isMandatory());
+    private void setValuesToViewComponents(Bundle bundle) {
+        mTechnology = bundle.getParcelable(IntentConstants.SELECTED_TECHNOLOGY.getValue());
 
-        String trail = technology.getTrail();
+        editTextTechnologyName.setText(mTechnology.getName());
+        editTextTechnologyDescription.setText(mTechnology.getDescription());
+        editTextTechnologyPrerequirements.setText(mTechnology.getPreRequirements());
+        editTextTechnologyRequiredTime.setText(String.valueOf(mTechnology.getTime()));
+        checkBoxTechnologyMandatory.setChecked(mTechnology.isMandatory());
+
+        String trail = mTechnology.getTrail();
         if(!trail.isEmpty()) {
             if(trail.equals(getString(R.string.backend_technology))) {
                 technologiesRadioGroup.check(R.id.radioButtonBackendTechnology);
@@ -249,19 +259,41 @@ public class TechnologyActivity extends AppCompatActivity {
             }
         }
 
-        int spinnerPosition = (int) (technology.getPercentageKnown() / 10);
+        int spinnerPosition = (int) (mTechnology.getPercentageKnown() / 10);
         spinnerPercentageKnown.setSelection(spinnerPosition);
     }
 
     private void disableAllComponents() {
         editTextTechnologyName.setFocusable(false);
+        editTextTechnologyName.setEnabled(false);
         editTextTechnologyDescription.setFocusable(false);
+        editTextTechnologyDescription.setEnabled(false);
         editTextTechnologyPrerequirements.setFocusable(false);
-        editTextTechnologyPrerequirements.setFocusable(false);
+        editTextTechnologyPrerequirements.setEnabled(false);
         editTextTechnologyRequiredTime.setFocusable(false);
+        editTextTechnologyRequiredTime.setEnabled(false);
         checkBoxTechnologyMandatory.setFocusable(false);
         checkBoxTechnologyMandatory.setEnabled(false);
         technologiesRadioGroup.setEnabled(false);
+        for(int i = 0; i < technologiesRadioGroup.getChildCount(); i++) {
+            RadioButton button = (RadioButton) technologiesRadioGroup.getChildAt(i);
+            button.setEnabled(false);
+            button.setFocusable(false);
+        }
         technologiesRadioGroup.setFocusable(false);
+        spinnerPercentageKnown.setFocusable(false);
+        spinnerPercentageKnown.setEnabled(false);
+    }
+
+    private void updateValues(Technology technology, String name, String description,
+                              String prerequirements, double time, boolean isMandatory,
+                              String trail, double percentageKnown) {
+        technology.setName(name);
+        technology.setDescription(description);
+        technology.setPreRequirements(prerequirements);
+        technology.setTime(time);
+        technology.setMandatory(isMandatory);
+        technology.setTrail(trail);
+        technology.setPercentageKnown(percentageKnown);
     }
 }

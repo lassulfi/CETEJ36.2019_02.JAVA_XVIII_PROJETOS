@@ -137,11 +137,15 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.My
         void onRowLongClicked(int position);
     }
 
-    public List<Technology> getTechnologies() {
-        return technologies;
-    }
-
     public void setTechnologies(List<Technology> technologies) {
         this.technologies = technologies;
+    }
+
+    public Technology getItemAtPosition(int position) {
+        if(position < technologies.size()) {
+            return technologies.get(position);
+        } else {
+            return null;
+        }
     }
 }

@@ -181,7 +181,7 @@ public class TechnologyListActivity extends AppCompatActivity
     @Override
     public void onRowClicked(int position) {
         mSelectedPosition = position;
-        Technology technology = technologyAdapter.getSelectedItem();
+        Technology technology = technologyAdapter.getItemAtPosition(mSelectedPosition);
         showTechnologyActivityInViewMode(technology);
     }
 
