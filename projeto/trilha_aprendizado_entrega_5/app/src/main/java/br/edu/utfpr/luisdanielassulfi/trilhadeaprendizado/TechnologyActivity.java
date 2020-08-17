@@ -143,8 +143,6 @@ public class TechnologyActivity extends AppCompatActivity {
         }
 
         if(isValid) {
-
-
             Intent intent = new Intent();
             if(mode == ResultConstants.ADD_TECHNOLOGY.getValue()) {
                 mTechnology = new Technology(technologyName, technologyDescription,
